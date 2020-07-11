@@ -2,7 +2,7 @@
 <html lang="en-us">
   <head>
     <meta charset="UTF-8">
-    <title>Income Choropleth</title>
+    <title>Chicago Median Income and Crime</title>
 
     <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.3/dist/leaflet.css"
@@ -17,6 +17,16 @@
 
     <!-- The div where we will inject our map -->
     <div id="map"></div>
+    
+    <div id="radioButtons">
+      <form id="year">
+        Select Year:
+        <input type="radio" name="year" value="2017">2017 
+        <input type="radio" name="year" value="2018">2018 
+        <input type="radio" name="year" value="2019">2019
+      </form>
+    </div>
+
 
 
     <!-- Leaflet JS-->
