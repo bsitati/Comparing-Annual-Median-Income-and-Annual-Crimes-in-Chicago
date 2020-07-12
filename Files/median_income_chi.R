@@ -1,20 +1,20 @@
 # install.packages('tigris')
 # install.packages('acs')
 # install.packages('leaflet')
-install.packages('GISTools')
-install.packages('rgdal')
+#install.packages('GISTools')
+#install.packages('rgdal')
+#install.packages('geojsonio')
+
 
 library(tigris)
 library(sp)
 library(tidyverse)
+library(geojsonio)
 
-chi <- tracts(state = 'IL', county = c('Cook'))
+
+
+chi <- tracts(state = 'IL', county = c('Cook'), year=2018)
 top1<- head(chi,1)
-
-
-write.csv(chi,"chi2018geodata.csv", row.names = FALSE)
-
-
 
 plot(chi)
 tx_counties <- counties(state = 'IL', cb = TRUE, resolution = '20m')
@@ -41,14 +41,11 @@ income_df <- data.frame(paste0(as.character(income_data@geography$state),
                         income_data@estimate)
 colnames(income_df) <- c("GEOID", "hhincome")
 
-write.csv(income_df,"chi2015incomedata.csv", row.names = FALSE)
-
-
 chi_merged <- geo_join(chi, income_df, "GEOID", "GEOID")
 
+geojson_write(chi_merged, file = "chi_merged_2018")
 
 
-write.csv(chi_merged,"chi2018_merged.csv", row.names = FALSE)
 
 pal <- colorQuantile("Greens", NULL, n = 6)
 popup <- paste0("Median household income: ", as.character(chi_merged$hhincome))

@@ -33,7 +33,7 @@ d3.selectAll("input[name='year']").on("change", function(){
     yearSelected = this.value;
     geoData = `static/data/chi_merged_${yearSelected}.geojson`;
     console.log(geoData);
-   // myMap.removeLayer(geojson);
+    //myMap.removeLayer(geojson);
 
     updateMedianIncomeMap();
 });
