@@ -33,6 +33,8 @@ d3.selectAll("input[name='year']").on("change", function(){
     yearSelected = this.value;
     geoData = `static/data/chi_merged_${yearSelected}.geojson`;
     console.log(geoData);
+   // myMap.removeLayer(geojson);
+
     updateMedianIncomeMap();
 });
 
@@ -43,7 +45,8 @@ function updateMedianIncomeMap(){
     // Grab data with d3
     d3.json(geoData).then(function(data) {
 
-      // Create a new choropleth layer
+    // Create a new choropleth layer
+
     geojson = L.choropleth(data, {
 
         // Define what  property in the features to use
@@ -74,7 +77,7 @@ function updateMedianIncomeMap(){
     // Set up the legend
     var legend = L.control({ position: "bottomright" });
     legend.onAdd = function() {
-      
+        d3.select(".legend").remove();
         var div = L.DomUtil.create("div", "info legend");
         var limits = geojson.options.limits;
         var colors = geojson.options.colors;
@@ -102,9 +105,10 @@ function updateMedianIncomeMap(){
 
     // Pass our map layers into our layer control
     // Add the layer control to the map
-    L.control.layers(baseMaps).addTo(myMap);
     console.log(basemap)
     });
 };
 
 updateMedianIncomeMap();
+L.control.layers(baseMaps).addTo(myMap);
+
