@@ -5,13 +5,10 @@
 #install.packages('rgdal')
 #install.packages('geojsonio')
 
-
 library(tigris)
 library(sp)
 library(tidyverse)
 library(geojsonio)
-
-
 
 chi <- tracts(state = 'IL', county = c('Cook'), year=2018)
 top1<- head(chi,1)
@@ -25,6 +22,7 @@ wtx_roads <- rbind_tigris(
     wtx_counties, function(x) roads(state = 'IL', county = x)
   )
 )
+
 # plot(wtx_roads)
 library(acs)
 library(leaflet)
@@ -44,8 +42,6 @@ colnames(income_df) <- c("GEOID", "hhincome")
 chi_merged <- geo_join(chi, income_df, "GEOID", "GEOID")
 
 geojson_write(chi_merged, file = "chi_merged_2018")
-
-
 
 pal <- colorQuantile("Greens", NULL, n = 6)
 popup <- paste0("Median household income: ", as.character(chi_merged$hhincome))
