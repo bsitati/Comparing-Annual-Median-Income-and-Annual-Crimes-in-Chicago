@@ -11,9 +11,7 @@ library(sp)
 library(tidyverse)
 library(geojsonio)
 
-
-
-chi <- tracts(state = 'IL', county = c('Cook'), year=2018)
+chi <- tracts(state = 'IL', county = c('Cook'), year=2014)
 top1<- head(chi,1)
 
 plot(chi)
@@ -29,7 +27,7 @@ wtx_roads <- rbind_tigris(
 library(acs)
 library(leaflet)
 api.key.install('ade3e21646b21e87eeb0b0e1d634d773dd666ec7')
-income_data <- acs.fetch(endyear = 2018,
+income_data <- acs.fetch(endyear = 2014,
                          geography = geo.make(state = "IL",
                                               county = c(031),
                                               tract = "*"),
@@ -43,9 +41,7 @@ colnames(income_df) <- c("GEOID", "hhincome")
 
 chi_merged <- geo_join(chi, income_df, "GEOID", "GEOID")
 
-geojson_write(chi_merged, file = "chi_merged_2018")
-
-
+geojson_write(chi_merged, file = "chi_merged_2014")
 
 pal <- colorQuantile("Greens", NULL, n = 6)
 popup <- paste0("Median household income: ", as.character(chi_merged$hhincome))
