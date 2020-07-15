@@ -21,17 +21,24 @@ var basemap = L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{
 
 var yearSelected = 2018
 
+var crime_control;
+var LAYER_ROBBERY;
+var LAYER_HOMICIDE;
+var LAYER_CRIMINAL_DAMAGE;
+var LAYER_SEX_OFFENSE;
+var LAYER_MOTOR_THEFT;
+var LAYER_CHILD_OFFENCE;
+var LAYER_ASSAULT;
+var LAYER_NARCOTICS;
+
 function updateCrimeMap(year){
 
   var url = "static/data/crime_objects_data.js"
   var yearSelected = parseInt(year);
-  console.log(typeof(yearSelected))
 
   d3.json(url).then(function(response) {
     
-
     // Create a new marker cluster group
-    // var markers = new L.FeatureGroup();
     var robberyMarkers = new L.FeatureGroup();
     var homicideMarkers = new L.FeatureGroup();
     var criminalDamageMarkers = new L.FeatureGroup();
@@ -41,14 +48,11 @@ function updateCrimeMap(year){
     var assaultMarkers = new L.FeatureGroup();
     var narcoticsMarkers = new L.FeatureGroup();
 
-  //  var markers = L.markerClusterGroup();
-
     console.log("Check Year Selected:")
     console.log(yearSelected)
 
     // Check for ROBBERY property
     var ROBBERY = response.filter(d => d.Crime === "ROBBERY" && d.Year === yearSelected);
-    console.log(ROBBERY)
 
     for (var i = 0; i < ROBBERY.length; i++) {
       // Set the data location property to a variable
@@ -57,8 +61,12 @@ function updateCrimeMap(year){
       var Longitude = ROBBERY[i].Longitude;
       var Date = ROBBERY[i].Date;
       var Year = ROBBERY[i].Year;
-        
-      var LAYER_ROBBERY = robberyMarkers.addLayer(L.marker([Latitude, Longitude], {icon: greenIcon})
+      
+      if(LAYER_ROBBERY){
+         myMap.removeLayer(LAYER_ROBBERY)
+      }
+
+      LAYER_ROBBERY = robberyMarkers.addLayer(L.marker([Latitude, Longitude], {icon: greenIcon})
       .bindPopup("Crime: " + Crime + "<br> Date: " + Date));
       } 
 
@@ -73,8 +81,12 @@ function updateCrimeMap(year){
       var Date = HOMICIDE[i].Date;
       var Year = HOMICIDE[i].Year;
 
+      if(LAYER_HOMICIDE){
+        myMap.removeLayer(LAYER_HOMICIDE)
+      }
+
       // Add a new marker to the cluster group and bind a pop-up
-      var LAYER_HOMICIDE = homicideMarkers.addLayer(L.marker([Latitude, Longitude],{icon: goldIcon})
+      LAYER_HOMICIDE = homicideMarkers.addLayer(L.marker([Latitude, Longitude],{icon: goldIcon})
       .bindPopup("Crime: " + Crime + "<br> Date: " + Date));
       }  
 
@@ -89,8 +101,12 @@ function updateCrimeMap(year){
       var Date = CRIMINAL_DAMAGE[i].Date;
       var Year = CRIMINAL_DAMAGE[i].Year;
 
+      if(LAYER_CRIMINAL_DAMAGE){
+        myMap.removeLayer(LAYER_CRIMINAL_DAMAGE)
+      }
+
       // Add a new marker to the cluster group and bind a pop-up
-      var LAYER_CRIMINAL_DAMAGE = criminalDamageMarkers.addLayer(L.marker([Latitude, Longitude], {icon: redIcon})
+      LAYER_CRIMINAL_DAMAGE = criminalDamageMarkers.addLayer(L.marker([Latitude, Longitude], {icon: redIcon})
       .bindPopup("Crime: " + Crime + "<br> Date: " + Date));
     }
     
@@ -105,8 +121,12 @@ function updateCrimeMap(year){
       var Date = SEX_OFFENSE[i].Date;
       var Year = SEX_OFFENSE[i].Year;
 
+      if(LAYER_SEX_OFFENSE){
+        myMap.removeLayer(LAYER_SEX_OFFENSE)
+      }
+
       // Add a new marker to the cluster group and bind a pop-up
-      var LAYER_SEX_OFFENSE = sexOffenseMarkers.addLayer(L.marker([Latitude, Longitude], {icon: orangeIcon})
+      LAYER_SEX_OFFENSE = sexOffenseMarkers.addLayer(L.marker([Latitude, Longitude], {icon: orangeIcon})
       .bindPopup("Crime: " + Crime + "<br> Date: " + Date));
       }
 
@@ -121,8 +141,12 @@ function updateCrimeMap(year){
       var Date = MOTOR_VEHICLE_THEFT[i].Date;
       var Year = MOTOR_VEHICLE_THEFT[i].Year;
 
+      if(LAYER_MOTOR_THEFT){
+        myMap.removeLayer(LAYER_MOTOR_THEFT)
+      }
+
       // Add a new marker to the cluster group and bind a pop-up
-      var LAYER_MOTOR_THEFT = motorTheftMarkers.addLayer(L.marker([Latitude, Longitude], {icon: violetIcon})
+      LAYER_MOTOR_THEFT = motorTheftMarkers.addLayer(L.marker([Latitude, Longitude], {icon: violetIcon})
       .bindPopup("Crime: " + Crime + "<br> Date: " + Date));
       }
 
@@ -137,8 +161,11 @@ function updateCrimeMap(year){
       var Date = OFFENSE_INVOLVING_CHILDREN[i].Date;
       var Year = OFFENSE_INVOLVING_CHILDREN[i].Year;
 
+      if(LAYER_CHILD_OFFENCE){
+        myMap.removeLayer(LAYER_CHILD_OFFENCE)
+      }
       // Add a new marker to the cluster group and bind a pop-up
-      var LAYER_CHILD_OFFENCE = childOffenseMarkers.addLayer(L.marker([Latitude, Longitude], {icon: blackIcon})
+      LAYER_CHILD_OFFENCE = childOffenseMarkers.addLayer(L.marker([Latitude, Longitude], {icon: blackIcon})
       .bindPopup("Crime: " + Crime + "<br> Date: " + Date));
       }
     
@@ -153,9 +180,13 @@ function updateCrimeMap(year){
       var Longitude = ASSAULT[i].Longitude;
       var Date = ASSAULT[i].Date;
       var Year = ASSAULT[i].Year;
+      
+      if(LAYER_ASSAULT){
+        myMap.removeLayer(LAYER_ASSAULT)
+      }
 
       // Add a new marker to the cluster group and bind a pop-up
-      var LAYER_ASSAULT = assaultMarkers.addLayer(L.marker([Latitude, Longitude], {icon: greyIcon})
+      LAYER_ASSAULT = assaultMarkers.addLayer(L.marker([Latitude, Longitude], {icon: greyIcon})
       .bindPopup("Crime: " + Crime + "<br> Date: " + Date));
       }
     
@@ -170,8 +201,12 @@ function updateCrimeMap(year){
       var Date = NARCOTICS[i].Date;
       var Year = NARCOTICS[i].Year;
 
+      if(LAYER_NARCOTICS){
+        myMap.removeLayer(LAYER_NARCOTICS)
+      }
+
       // Add a new marker to the cluster group and bind a pop-up
-      var LAYER_NARCOTICS = narcoticsMarkers.addLayer(L.marker([Latitude, Longitude], {icon: blueIcon} )
+      LAYER_NARCOTICS = narcoticsMarkers.addLayer(L.marker([Latitude, Longitude], {icon: blueIcon} )
       .bindPopup("Crime: " + Crime + "<br> Date: " + Date));
       }
 
@@ -200,8 +235,13 @@ function updateCrimeMap(year){
       };
     
     console.log(ROBBERY)
+  if (crime_control){
+    console.log(crime_control)
+    crime_control.remove(myMap)
+    
+  }
+  crime_control = L.control.layers(null, crime_layers, {collapsed:false}).addTo(myMap);
 
-    L.control.layers(null, crime_layers).addTo(myMap);
   });
 };
 
@@ -211,26 +251,31 @@ updateCrimeMap(yearSelected);
 
 // Load in geojson data
 var geoData = `static/data/chi_merged_${yearSelected}.geojson`;
-// console.log(geoData)
 
-// update median income data year on radio button change
+// update data year on radio button change
 d3.selectAll("input[name='year']").on("change", function(){
   yearSelected = this.value;
   geoData = `static/data/chi_merged_${yearSelected}.geojson`;
   console.log(geoData);
+  
   updateMedianIncomeMap();
   updateCrimeMap(yearSelected);
 });
 
 // function to updateMedianIncomeMap
+
+var geojson;
+
 function updateMedianIncomeMap(){
-    var geojson;
     var layerGroup = L.layerGroup().addTo(myMap);
     //layerGroup.removeLayer(geojson);
 
     // Grab data with d3
     d3.json(geoData).then(function(data) {
-
+    
+    if(geojson){
+      geojson.remove(myMap)
+    }
     // Create a new choropleth layer
     geojson = L.choropleth(data, {
     
@@ -249,7 +294,7 @@ function updateMedianIncomeMap(){
         // Border color
         color: "#fff",
         weight: 1,
-        fillOpacity: 0.5
+        fillOpacity: 0.7
         },
 
         // Binding a pop-up to each layer
@@ -258,7 +303,7 @@ function updateMedianIncomeMap(){
             "$" + feature.properties.hhincome);
         }
     }).addTo(layerGroup);
-    layerGroup.addTo(myMap);
+    //layerGroup.addTo(myMap);
 
     // Set up the legend
     var legend = L.control({ position: "bottomright" });
@@ -272,8 +317,8 @@ function updateMedianIncomeMap(){
         // Add min & max
         var legendInfo = "<h1>Median Income</h1>" +
          "<div class=\"labels\">" +
-           "<div class=\"min\">" + limits[0] + "</div>" +
-            "<div class=\"max\">" + limits[limits.length - 1] + "</div>" +
+           "<div class=\"min\">" + 4000 + "</div>" +
+            "<div class=\"max\">" + 260000 + "</div>" +
           "</div>";
 
         div.innerHTML = legendInfo;
@@ -289,9 +334,6 @@ function updateMedianIncomeMap(){
     // Adding legend to the map
     legend.addTo(myMap);
 
-    // Pass our map layers into our layer control
-    // Add the layer control to the map
-    console.log(basemap)
     });
 };
 
