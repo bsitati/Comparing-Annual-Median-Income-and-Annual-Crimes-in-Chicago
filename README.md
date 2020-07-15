@@ -86,11 +86,13 @@ The objective was to provide users information that allows one to analyze if the
 
 * Using the assigned colors, created legend for median income data based on the base year of 2018
 
+![Legend](Images/legend.PNG)
+
 * Added control boxes to allow user to select crimes for the base year to be visualized on the map 
 
-* Added interactivity in the form of pop up labels that on clicking a census tract show the number of the census tract along with its median income for 2018
+* Added interactivity in the form of pop up labels that on clicking a census tract show the number of the census tract along with its median income for chosen year
 
-![Legend](Images/legend.PNG)
+![Pop Up](Images/pop_up.png)
 
 ### Created Radio Buttons for Year Selection
 
