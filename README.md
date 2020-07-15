@@ -8,7 +8,7 @@ The objective was to provide users information that allows one to analyze if the
 
 ## Data Wrangling
 
-Median Household Income
+### Median Household Income
 
 * Median Household Income and Geo Tracts Obtained and Defined Using R
 
@@ -18,7 +18,7 @@ Median Household Income
 
 * Used this call to obtain median household income for each tract within the Chicago area
 
-## Geo Tracts
+### Geo Tracts
 
 * Researched multiple packages for collecting geo tract data and mapping the information – R proved to be the best environment
 
@@ -28,7 +28,7 @@ Median Household Income
 
 * Merged Geo Tracts and Median Income on “GEOID”. Created one data frame w/geography for tracts and median income
 
-## Merged Data
+### Merged Data
 
 * Visualized the merged data in R with Leaflet
 
@@ -90,7 +90,7 @@ Median Household Income
 
 * Added interactivity in the form of pop up labels that on clicking a census tract show the number of the census tract along with its median income for 2018
 
-![Legend](Images/legend.png)
+![Legend](Images/legend.PNG)
 
 ### Created Radio Buttons for Year Selection
 
@@ -114,7 +114,7 @@ Median Household Income
 
 * Added interactivity with a pop up that shows the date, crime type, and location of each crime when a pin is clicked
 
-![Crime Check Boxes](Images/crime_selection.png)
+![Crime Check Boxes](Images/crime_selection.PNG)
 
 ## Final Web Page
 
