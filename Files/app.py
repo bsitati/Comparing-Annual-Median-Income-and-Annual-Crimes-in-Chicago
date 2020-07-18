@@ -12,7 +12,9 @@ import json
 import collections
 import sys
 
-app = Flask(__name__)
+
+app = Flask(__name__,
+            template_folder="templates")
 
 
 DATABASE = 'CrimeChicago.db'
@@ -28,9 +30,20 @@ def get_db():
 def close_connection(exception):
     db = getattr(g, '_database', None)
     if db is not None:
-        db.close()     
+        db.close()   
 
-@app.route('/')
+@app.route("/")
+def home():
+    """Serve homepage template."""
+    return render_template(
+        'home.html',
+        title='Flask-Login Tutorial.',
+        body="You are now logged in!"
+    )
+
+@app.route("/Files") 
+
+@app.route('/api/v2/chicago_crime')
 def crime_list():
     db = get_db()
     data = db.execute('SELECT * FROM criminals_mappings00').fetchall()
@@ -53,7 +66,7 @@ def crime_list():
         # d['Zip'] = row.Zip
         objects_list.append(d)
     # j = json.dumps(objects_list)
-    objects_file = 'crime_objects_data00.js'
+    objects_file = 'Files/static/data/crime_objects_data00.js'
     f = open(objects_file,'w')
     json.dump(objects_list, f)
 
@@ -65,6 +78,9 @@ def crime_list():
     # print >> f, j
         
     #conn.close()
+
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)
